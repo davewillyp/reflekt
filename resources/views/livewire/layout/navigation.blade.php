@@ -20,19 +20,22 @@ new class extends Component
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex grow">
                 <!-- Logo -->
-                <div class="flex items-center shrink-0">
+                <div class="flex items-center max-sm:grow">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 grow sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Feed') }}
                     </x-nav-link>
+                </div>
+                <div class="inline-flex items-center">
+                    <a href="/reflekt/create" wire:navigate class="focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">New Reflektion</a>
                 </div>
             </div>
 

@@ -1,12 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Volt::route('reflekt/create', 'reflekt-create')
+    ->middleware(['auth', 'verified'])
+    ->name('reflekt.create');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

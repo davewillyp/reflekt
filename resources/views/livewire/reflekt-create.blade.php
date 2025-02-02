@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
@@ -7,13 +7,25 @@ use Livewire\Attributes\Layout;
 new #[Layout('layouts.app')] class extends Component {
     use WithFileUploads;
 
-    public $message = ''; 
+    public string $reflekt; 
     public $photo;
 
-    public function save(){
 
-         $this->message = '';
-         $this->photo->store('photos','public');
+    public function save(){
+    
+        if($this->photo){
+            $path = $this->photo->store('photos','public');
+        } else {
+            $path = '';
+        }
+        
+        Auth::user()->reflekts()->create([
+            'reflekt' => $this->reflekt,
+            'photo' => $path
+        ]);
+
+        $this->redirect('/feed');
+
    }
 }; ?>
 
@@ -24,8 +36,8 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <form class="max-w-sm mx-auto" wire:submit="save">
                 <div class="mb-5">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Reflektion</label>
-                    <input type="text" wire:model="message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How are you feeling today?" required />
+                    <label for="reflekt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Reflektion</label>
+                    <input type="text" wire:model="reflekt" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How are you feeling today?" required />
                 </div>
               
                 @if($photo)
@@ -65,6 +77,9 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <button type="submit" class="text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                 </form>
+
+
+               
 
             </div>
         </div>

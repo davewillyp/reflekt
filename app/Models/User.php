@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function reflekts()
+    {
+        return $this->hasMany(Reflekt::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(ReflektLike::class);
+    }
 }

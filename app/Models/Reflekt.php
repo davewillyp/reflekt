@@ -23,4 +23,9 @@ class Reflekt extends Model
     {
         return $this->likes()->where('user_id', Auth::user()->id);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
